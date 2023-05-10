@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   type Week {
@@ -23,6 +23,58 @@ const typeDefs = gql`
     user: String
     in_day: String
     finished: Boolean!
+  }
+
+  type Mutation {
+    createWeek(
+      week: Int!
+      year: Int!
+      description: String
+      type: String!
+      hour_ini: String
+      hour_end: String
+      color: String
+    ): Week
+
+    updateWeek(
+      _id: ID!
+      week: Int
+      year: Int
+      description: String
+      type: String
+      hour_ini: String
+      hour_end: String
+      color: String
+    ): Week
+
+    deleteWeek(_id: ID!): Week
+
+    createTask(
+      _id_week: ID!
+      name: String!
+      description: String!
+      hour_ini: String
+      hour_end: String
+      type: String!
+      user: String
+      in_day: String
+      finished: Boolean!
+    ): Task
+
+    updateTask(
+      _id: ID!
+      _id_week: ID
+      name: String
+      description: String
+      hour_ini: String
+      hour_end: String
+      type: String
+      user: String
+      in_day: String
+      finished: Boolean
+    ): Task
+
+    deleteTask(_id: ID!): Task
   }
 
   type Query {

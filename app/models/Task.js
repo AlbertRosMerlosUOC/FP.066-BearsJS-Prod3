@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-  _id_week: { type: mongoose.Schema.Types.ObjectId, ref: 'Week', required: true, },
+  _id_week: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Week",
+    required: true,
+  },
   name: { type: String, required: true },
   description: { type: String, required: true },
   hour_ini: String,

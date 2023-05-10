@@ -32,6 +32,45 @@ form.addEventListener("submit", (event) => {
       ? "de " + hourIni + " a " + hourEnd + "h"
       : "No especificadas horas de inicio y de fin";
 
+  var _id = "";
+
+  // Fetch para crear una tarea
+  fetch("http://localhost:5000", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+      mutation {
+        createWeek(
+          week: ${week},
+          year: ${year},
+          description: "Semana ${week} del año ${year}",
+          hour_ini: "${hourIni}",
+          hour_end: "${hourEnd}",
+          type: "${type}",
+          color: "${color}"
+        ) {
+          _id
+          week
+          year
+          description
+          hour_ini
+          hour_end
+          type
+          color
+        }
+      }
+    `,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      _id = res.data.createWeek._id;
+      console.log(_id);
+    });
+
   // Crear un nuevo elemento HTML para la tarjeta
   const card = document.createElement("div");
   card.classList.add("card");
@@ -48,7 +87,7 @@ form.addEventListener("submit", (event) => {
     <p><b>Modalidad de trabajo:</b> ${type}</p>
     <p><b>Horario laboral:</b> ${schedule}</p>
     <div class="buttonsDiv">
-      <button type="button" class="btn btn-success" onclick="window.location.href='./dashboard.html?_id=mockup-${week}-${year}'"><i class="fa fa-search fa-lg"></i></button>
+      <button type="button" class="btn btn-success" onclick="window.location.href='./dashboard.html?_id=${_id}'"><i class="fa fa-search fa-lg"></i></button>
       <button type="button" class="btn btn-danger delete" id="delete" data-bs-toggle="modal" data-bs-target="#myModalQuit"><i class="fa fa-trash-o fa-lg"></i></button>
     </div>
   `;
@@ -115,7 +154,10 @@ function assignTarget(id) {
 }
 
 function writeCard(item) {
-  const schedule = item.hour_ini != "" && item.hour_end != "" ? "de " + item.hour_ini + " a " + item.hour_end + "h" : "No especificadas horas de inicio y de fin";
+  const schedule =
+    item.hour_ini != "" && item.hour_end != ""
+      ? "de " + item.hour_ini + " a " + item.hour_end + "h"
+      : "No especificadas horas de inicio y de fin";
   const workMode = item.type == "T" ? "Teletrabajo" : "Presencial";
 
   const card = document.createElement("div");
@@ -165,7 +207,7 @@ function writeCard(item) {
   }
 }
 
-// Carga de datos inicial con conexión a MongoDB. 
+// Carga de datos inicial con conexión a MongoDB.
 // Conexion al servidor GraphQl para la llamada getWeeks
 fetch("http://localhost:5000", {
   method: "POST",
@@ -186,7 +228,8 @@ fetch("http://localhost:5000", {
       }
     }`,
   }),
-}).then((res) => res.json())
+})
+  .then((res) => res.json())
   .then((res) => {
     res.data.getWeeks.map((item) => writeCard(item));
   });
