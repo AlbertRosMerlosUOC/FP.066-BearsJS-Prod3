@@ -6,4 +6,5 @@ npm install graphql express-graphql
 npm install apollo-server graphql
 
 2. arrancar proyecto
-npm start - arrancar el servidor en puerto 300
+npm start - arrancar el servidor en puerto 4000
+npm run dev para arrancar con nodemon

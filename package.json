@@ -12,6 +12,8 @@
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "mongoose": "^7.0.4",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
   }
 }
