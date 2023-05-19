@@ -4,7 +4,7 @@ const env = require("dotenv");
 const MONGO_USERNAME = 'BearsJS';
 const MONGO_PASSWORD = 'BearsJS';
 const MONGO_CLUSTER_NAME = 'product2.v5kejnx';
-const MONGO_DB_NAME = 'test';
+const MONGO_DB_NAME = 'producto3';
 
 const mongoDbUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER_NAME}.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`;
 

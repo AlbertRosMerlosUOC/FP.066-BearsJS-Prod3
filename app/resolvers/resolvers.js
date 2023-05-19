@@ -19,7 +19,7 @@ const resolvers = {
   Mutation: {
     // Resolver para crear una semana
     createWeek: weeksController.createWeek,
-    // Resolver para actualizar una semana por _id
+    // Resolver para actualizar una semana por _id. No lo vamos a utilizar en este producto.
     updateWeek: weeksController.updateWeek,
     // Resolver para eliminar una semana por _id
     deleteWeek: weeksController.deleteWeek,
