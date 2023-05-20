@@ -1,6 +1,6 @@
 To do list:
-    1 Control de drag and drop para modificar el campo in_day de la tarjeta. Llamada a Mutation 'UpdateTask'
-    2 Query 'getTaskById' ligado con el frontal
-    3 Mutation 'UpdateTask' ligado con el frontal
+    x Control de drag and drop para modificar el campo in_day de la tarjeta. Llamada a Mutation 'UpdateTaskDay'
+    x Query 'getTaskById' ligado con el frontal
+    x Mutation 'UpdateTask' ligado con el frontal
     4 Websockets y errores
     5 Middleware para subir archivos ligado a la Mutation 'UpdateTask' y 'CreateTask'

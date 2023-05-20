@@ -27,6 +27,8 @@ const resolvers = {
     createTask: tasksController.createTask,
     // Resolver para actualizar una tarea por _id
     updateTask: tasksController.updateTask,
+    // Resolver para actualizar el día asignado para una tarea por _id
+    updateTaskDay: tasksController.updateTaskDay,
     // Resolver para eliminar una tarea por _id
     deleteTask: tasksController.deleteTask,
   },

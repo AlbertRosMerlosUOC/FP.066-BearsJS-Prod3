@@ -10,7 +10,7 @@ const mongoDbUrl = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CL
 
 env.config();
 mongoose.connect(mongoDbUrl)
-        .then(() => console.log('Connected to MongoDB'))
+        .then(() => console.log('Aplicación conectada a MongoDB'))
         .catch((err) => console.log(err));
 
 const database = mongoose.connection;

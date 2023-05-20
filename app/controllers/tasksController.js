@@ -45,7 +45,6 @@ const updateTask = async (
   _,
   {
     _id,
-    _id_week,
     name,
     description,
     hour_ini,
@@ -59,7 +58,6 @@ const updateTask = async (
   const updatedTask = await Task.findByIdAndUpdate(
     _id,
     {
-      _id_week,
       name,
       description,
       hour_ini,
@@ -71,9 +69,24 @@ const updateTask = async (
     },
     { new: true }
   )
-    .populate("_id_week")
     .exec();
   return updatedTask;
+};
+
+const updateTaskDay = async (
+  _,
+  {
+    _id,
+    in_day,
+  }
+) => {
+  const updatedTaskDay = await Task.findByIdAndUpdate(
+    _id,
+    { in_day },
+    { new: true }
+  )
+    .exec();
+  return updatedTaskDay;
 };
 
 const deleteTask = async (_, { _id }) => {
@@ -89,5 +102,6 @@ module.exports = {
   getTasksByWeek,
   createTask,
   updateTask,
+  updateTaskDay,
   deleteTask,
 };

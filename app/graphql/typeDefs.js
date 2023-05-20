@@ -63,7 +63,6 @@ const typeDefs = gql`
 
     updateTask(
       _id: ID!
-      _id_week: ID
       name: String
       description: String
       hour_ini: String
@@ -72,6 +71,11 @@ const typeDefs = gql`
       user: String
       in_day: String
       finished: Boolean
+    ): Task
+
+    updateTaskDay(
+      _id: ID!
+      in_day: String
     ): Task
 
     deleteTask(_id: ID!): Task

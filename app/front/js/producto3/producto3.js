@@ -1,3 +1,6 @@
+// Iniciamos el servicio de socket
+let socket = io();
+
 // Seleccionar el formulario y el contenedor de la tarjeta
 const form = document.querySelector("#myForm");
 const cardContainer = document.querySelector("#cardContainer");
@@ -68,6 +71,7 @@ form.addEventListener("submit", (event) => {
     .then((res) => res.json())
     .then((res) => {
       _id = res.data.createWeek._id;
+      socket.emit("createWeek", "Se ha creado una nueva semana.");
 
       // Crear un nuevo elemento HTML para la tarjeta
       const card = document.createElement("div");
@@ -79,7 +83,6 @@ form.addEventListener("submit", (event) => {
       } else {
         card.classList.add("cardWeekLight");
       }
-      alert(_id);
       card.innerHTML = `
         <h4>Semana ${week} del año ${year}</h4>
         <p>${desc}</p>
@@ -225,7 +228,7 @@ function writeCard(item) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        socket.emit("deleteWeek", "Se ha eliminado una semana.");
       });
   }
 }
