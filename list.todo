@@ -1,8 +1,2 @@
 To do list:
-    x Control de drag and drop para modificar el campo in_day de la tarjeta. Llamada a Mutation 'UpdateTaskDay'
-    x Query 'getTaskById' ligado con el frontal
-    x Mutation 'UpdateTask' ligado con el frontal
-    x Websockets y errores
-    5 Middleware para subir archivos ligado a la Mutation 'UpdateTask' y 'CreateTask'
-    x Intentar que salga algun mensaje en el front cuando se activa un websocket
-    7 Hay un bug en el updatedTask, que como no tiene campo de dia, lo pone al 0
+    - Hay un bug en el updatedTask, que como no tiene campo de dia, lo pone al 0

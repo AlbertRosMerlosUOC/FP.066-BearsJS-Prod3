@@ -13,12 +13,13 @@ const taskSchema = new mongoose.Schema({
   type: { type: String, required: true },
   user: String,
   in_day: String,
-  finished: { type: Boolean, required: true },
+  finished: { type: Boolean, required: true }
+  /*, TODO
   file: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "File",
     required: false,
-  }
+  }*/
 });
 
 const Task = mongoose.model("Task", taskSchema);

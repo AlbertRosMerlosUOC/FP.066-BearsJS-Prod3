@@ -6,8 +6,22 @@ socket.on("showToast", (msg)=> {
   goLiveToast();
 });
 
+socket.on("fileToast", (msg)=> {
+  console.log(msg);
+  goLiveFileToast();
+});
+
 function goLiveToast() {
   var myToast = document.getElementById("liveToast");
+  var bsToast = new bootstrap.Toast(myToast);
+  bsToast.show();
+  setTimeout(function() {
+      bsToast.hide();
+  }, 5000);
+}
+
+function goLiveFileToast() {
+  var myToast = document.getElementById("fileToast");
   var bsToast = new bootstrap.Toast(myToast);
   bsToast.show();
   setTimeout(function() {
@@ -27,6 +41,9 @@ const dropDay5 = document.getElementById("day5");
 const dropDay6 = document.getElementById("day6");
 const dropDay7 = document.getElementById("day7");
 const targetCard = document.getElementById("target-card");
+
+const fileForm = document.querySelector("#myFileForm");
+const fileModal = document.querySelector("#fileTask");
 
 // Agregar controladores de eventos para eventos de arrastrar y soltar
 dropUnassigned.addEventListener("dragover", dragOver);
@@ -60,12 +77,6 @@ form.addEventListener("submit", (event) => {
   const user = document.querySelector("#userInput").value;
   const inDay = document.querySelector("#inDay").value;
   const fini = document.querySelector("#finishedInput").checked ? true : false;
-  // TODO 5
-  const fileInput = document.getElementById('fileInput');
-  const selectedFile = fileInput.files[0];
-  const fileName = selectedFile.name;
-  console.log(fileName);
-
   var _id = "";
 
   // Fetch para crear una semana
@@ -116,6 +127,7 @@ form.addEventListener("submit", (event) => {
       <p class="fDesc">${desc}</p>
       <div class="buttonsDiv">
         <button type="button" class="btn btn-success xx-small button-editTask" data-bs-toggle="modal" data-bs-target="#formTask" task-id="${_id}"><i class="fa fa-edit fa-lg"></i></button>
+        <button type="button" class="btn btn-info xx-small button-fileTask" data-bs-toggle="modal" data-bs-target="#fileTask" task-id="${_id}"><i class="fa fa-file-o fa-lg"></i></button>
         <button type="button" class="btn btn-danger xx-small button-deleteTask" data-bs-toggle="modal" data-bs-target="#myModalDelete"><i class="fa fa-trash-o fa-lg"></i></button>
       </div>
     `;
@@ -319,11 +331,7 @@ saveTask.addEventListener("click", () => {
   const user = document.querySelector("#userInput").value;
   const days = document.querySelector("#inDay").value;
   const fini = document.querySelector("#finishedInput").checked ? true : false;
-  // TODO 5
-  // const fileInput = document.getElementById('fileInput');
-  // const selectedFile = fileInput.files[0];
-  // const fileName = selectedFile.name;
-  // console.log(fileName);
+  
   // Fetch para actualizar una tarea
   fetch("http://localhost:5000", {
     method: "POST",
@@ -360,6 +368,7 @@ saveTask.addEventListener("click", () => {
     <p class="fDesc">${desc}</p>
     <div class="buttonsDiv">
         <button type="button" class="btn btn-success xx-small button-editTask" data-bs-toggle="modal" data-bs-target="#formTask" task-id="${editingTask.id}"><i class="fa fa-edit fa-lg"></i></button>
+        <button type="button" class="btn btn-info xx-small button-fileTask" data-bs-toggle="modal" data-bs-target="#fileTask"><i class="fa fa-file-o fa-lg"></i></button>
         <button type="button" class="btn btn-danger xx-small button-deleteTask" data-bs-toggle="modal" data-bs-target="#myModalDelete"><i class="fa fa-trash-o fa-lg"></i></button>
     </div>
   `;
@@ -430,7 +439,6 @@ const idWeek = new URLSearchParams(window.location.search).get("_id");
 function writeCard(item) {
   // Crear un nuevo elemento HTML para la tarjeta
   const card = document.createElement("div");
-  var finished = item.finished ? "1" : "0";
   card.classList.add("card");
   card.classList.add("cardTask");
   card.id = item._id;
@@ -439,12 +447,14 @@ function writeCard(item) {
     <p class="fDesc">${item.description}</p>
     <div class="buttonsDiv">
       <button type="button" class="btn btn-success xx-small button-editTask" data-bs-toggle="modal" data-bs-target="#formTask" task-id="${item._id}"><i class="fa fa-edit fa-lg"></i></button>
+      <button type="button" class="btn btn-info xx-small button-fileTask" data-bs-toggle="modal" data-bs-target="#fileTask" task-id="${item._id}"><i class="fa fa-file-o fa-lg"></i></button>
       <button type="button" class="btn btn-danger xx-small button-deleteTask" data-bs-toggle="modal" data-bs-target="#myModalDelete" task-id="${item._id}"><i class="fa fa-trash-o fa-lg"></i></button>
     </div>
   `;
 
   // Obtener el primer botón dentro del elemento "card"
   const editTask = card.querySelector(".button-editTask");
+  const fileTask = card.querySelector(".button-fileTask");
   const editCard = editTask.parentElement.parentElement;
 
   // Agregar un controlador de eventos "click" al segundo botón
@@ -460,6 +470,15 @@ function writeCard(item) {
     document.getElementById("modal-add-save").style.display = "block";
     // Ocultamos el campo de añadir al día en la edición de la tarjeta
     document.querySelector(".div-add-into").style.display = "none";
+  });
+
+  // Agregar un controlador de eventos "click" al segundo botón
+  fileTask.addEventListener("click", () => {
+    // Reiniciamos el formulario
+    fileForm.reset();
+    document.querySelector("#file-task-card").value = fileTask.getAttribute("task-id");
+    // Añadimos una clase a la tarjeta que estamos editando para poder actualizarla después
+    editCard.classList.add("editing");
   });
 
   // Obtener el segundo botón dentro del elemento "card"
@@ -636,3 +655,51 @@ function llenarDatosTarea(id) {
     document.querySelector("#finishedInput").checked =  res.data.getTaskById.finished;;
   });
 }
+
+fileForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const myFile = e.currentTarget.myFile.files[0];
+  let postData = new FormData();
+  postData.append("myFile", myFile);
+
+  if (e.currentTarget.myFile.files.length > 0) {
+    // Realiza la solicitud para subir el archivo
+    fetch('http://localhost:3000/upload', {
+      method: 'POST',
+      body: postData
+    })
+    .then(response => {
+      console.log(response);
+      if (response.ok) {
+        // El archivo se ha subido correctamente
+        console.log("Response status:", response.status);
+        return response.json();
+      } else {
+        // Hubo un error al subir el archivo
+        throw new Error('Error al subir el archivo: ' + response.json());
+      }
+    })
+    .then(response => response)
+    .then(data => {
+      socket.emit("importFile", "Se ha subido correctamente un archivo.");
+    })
+  }
+  
+  // Limpiar los valores del formulario
+  fileForm.reset();
+
+  // Cerrar el modal después de agregar la tarjeta
+  const modal = document.querySelector("#fileTask");
+  const modalInstance = bootstrap.Modal.getInstance(modal);
+  modalInstance.hide();
+});
+
+fileModal.addEventListener("hidden.bs.modal", function (event) {
+  // Eliminamos la clase "editing" de cualquier tarea que se haya editado
+  const editingTask = document.querySelectorAll(".editing");
+  for (let i = 0; i < editingTask.length; i++) {
+    editingTask[i].classList.remove("editing");
+  }
+  // Mostramos el campo de añadir al día
+  document.querySelector(".div-add-into").style.display = "block";
+});

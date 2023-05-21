@@ -23,13 +23,6 @@ const typeDefs = gql`
     user: String
     in_day: String
     finished: Boolean!
-    file: File
-  }
-
-  type File {
-    filename: String!
-    mimetype: String!
-    encoding: String!
   }
 
   type Mutation {

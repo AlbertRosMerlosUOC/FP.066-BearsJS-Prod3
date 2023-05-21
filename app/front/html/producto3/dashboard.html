@@ -175,12 +175,10 @@
                 <label class="form-check-label" for="finishedInput"><b>Tarea terminada</b></label>
               </div>
             </div>
-            <div class="form-group form-group-file">
-              <label class="form-label" for="fileInput">Añadir archivo</label>
-              <input class="form-control form-control-sm" type="file" placeholder="Buscar archivo" id="fileInput">
-            </div>
-            <button id="modal-add-create" class="btn btn-primary" type="submit">Crear tarea</button>
-            <button id="modal-add-save" class="btn btn-success">Guardar tarea</button>
+            <span style="width: 100%; text-align: center; margin-top: 10px;">
+              <button id="modal-add-create" class="btn btn-primary" type="submit" style="width: 325px;">Crear tarea</button>
+              <button id="modal-add-save" class="btn btn-success" style="width: 325px;">Guardar tarea</button>
+            </span>
           </form>
         </div>    
       </div>
@@ -202,6 +200,30 @@
     </div>
   </div>
 
+  <div class="modal fade" id="fileTask" tabindex="1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 600px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabelFile">Añadir archivo a la tarea</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- <form id="myFileForm" enctype="multipart/form-data"> -->
+          <form id="myFileForm" action="/">
+            <input type="hidden" id="file-task-card" value=""/>
+            <div class="form-group form-group-file">
+              <label class="form-label" for="myFile">Añadir archivo</label>
+              <input class="form-control form-control-sm" type="file" placeholder="Buscar archivo" name="myFile"/>
+            </div>
+            <span style="width: 100%; text-align: center; margin-top: 10px;">
+              <button type="submit" class="btn btn-primary" id="addFile" style="width: 325px;">Añadir archivo</button>
+            </span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
           crossorigin="anonymous"></script>
@@ -216,6 +238,18 @@
         </div>
         <div class="toast-body">
             Se han actualizado los datos en el servidor de base de datos.
+        </div>
+    </div>
+  </div>
+
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="fileToast" class="toast text-bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+        <div class="toast-header">
+            <i class="fa fa-file-o" aria-hidden="true"></i>&nbsp;<strong class="me-auto">Archivo importado correctamente</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Se ha subido correctamente el archivo seleccionado a la ruta <i>app/data/upload/</i> del servidor.
         </div>
     </div>
   </div>
