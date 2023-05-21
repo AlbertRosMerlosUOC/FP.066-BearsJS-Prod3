@@ -14,6 +14,11 @@ const taskSchema = new mongoose.Schema({
   user: String,
   in_day: String,
   finished: { type: Boolean, required: true },
+  file: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "File",
+    required: false,
+  }
 });
 
 const Task = mongoose.model("Task", taskSchema);

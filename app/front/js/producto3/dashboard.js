@@ -1,6 +1,11 @@
 // Iniciamos el servicio de socket
 let socket = io();
 
+socket.on("updateTask", (msg)=> {
+  console.log(msg);
+});
+
+
 // Seleccionar el formulario y los contenedores de la tarjetas
 const form = document.querySelector("#myForm");
 const modal = document.querySelector("#formTask");
@@ -46,6 +51,11 @@ form.addEventListener("submit", (event) => {
   const user = document.querySelector("#userInput").value;
   const inDay = document.querySelector("#inDay").value;
   const fini = document.querySelector("#finishedInput").checked ? true : false;
+  // TODO 5
+  const fileInput = document.getElementById('fileInput');
+  const selectedFile = fileInput.files[0];
+  const fileName = selectedFile.name;
+  console.log(fileName);
 
   var _id = "";
 
@@ -300,6 +310,11 @@ saveTask.addEventListener("click", () => {
   const user = document.querySelector("#userInput").value;
   const days = document.querySelector("#inDay").value;
   const fini = document.querySelector("#finishedInput").checked ? true : false;
+  // TODO 5
+  // const fileInput = document.getElementById('fileInput');
+  // const selectedFile = fileInput.files[0];
+  // const fileName = selectedFile.name;
+  // console.log(fileName);
   // Fetch para actualizar una tarea
   fetch("http://localhost:5000", {
     method: "POST",
