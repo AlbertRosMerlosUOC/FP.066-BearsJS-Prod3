@@ -1,6 +1,20 @@
 // Iniciamos el servicio de socket
 let socket = io();
 
+socket.on("showToast", (msg)=> {
+  console.log(msg);
+  goLiveToast();
+});
+
+function goLiveToast() {
+  var myToast = document.getElementById("liveToast");
+  var bsToast = new bootstrap.Toast(myToast);
+  bsToast.show();
+  setTimeout(function() {
+      bsToast.hide();
+  }, 5000);
+}
+
 // Seleccionar el formulario y el contenedor de la tarjeta
 const form = document.querySelector("#myForm");
 const cardContainer = document.querySelector("#cardContainer");

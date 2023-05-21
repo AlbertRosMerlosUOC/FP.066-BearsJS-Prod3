@@ -208,6 +208,18 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="../../js/producto3/dashboard.js"></script>
 
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast text-bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+        <div class="toast-header">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;<strong class="me-auto">Datos actualizados</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Se han actualizado los datos en el servidor de base de datos.
+        </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

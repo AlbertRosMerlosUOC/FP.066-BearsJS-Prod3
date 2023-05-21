@@ -19,34 +19,38 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-  // Albert: Podemos comprobar si un cliente se conecta mediante la siguiente línea
+  // Albert: Podemos comprobar si un cliente se conecta descomentando la siguiente línea
   //console.log('Un cliente se ha conectado');
 
   // Recolector de eventos que emiten mensajes
   socket.on("createWeek", (msg)=> {
     console.log(msg);
+    io.emit("showToast", msg);
   });
 
   socket.on("deleteWeek", (msg)=> {
     console.log(msg);
+    io.emit("showToast", msg);
   });
 
   socket.on("createTask", (msg)=> {
     console.log(msg);
+    io.emit("showToast", msg);
   });
 
   socket.on("updateTaskDay", (msg)=> {
     console.log(msg);
+    io.emit("showToast", msg);
   });
 
   socket.on("updateTask", (msg)=> {
-    // console.log(msg);
-    // TODO 6 Replicar
-    io.emit("updateTask", msg);
+    console.log(msg);
+    io.emit("showToast", msg);
   });
 
   socket.on("deleteTask", (msg)=> {
     console.log(msg);
+    io.emit("showToast", msg);
   });
 
 });
